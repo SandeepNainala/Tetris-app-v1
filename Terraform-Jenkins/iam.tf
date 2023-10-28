@@ -16,9 +16,6 @@ resource "aws_iam_role" "test_role" {
   }
   EOF
 }
-tags = {
-  tag-key = "Jenkins-terraform"
-}
 
 resource "aws_iam_group_policy_attachment" "test_attachment" {
   role       = aws_iam_role.test_role.name
