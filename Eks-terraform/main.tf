@@ -27,41 +27,20 @@ data "aws_vpc" "default" {
 }
 
 ##get public subnets for cluster
-#data "aws_subnets" "public" {
-#  filter {
-#    name   = "vpc-id"
-#    values = [data.aws_vpc.default.id]
-#  }
-#}
-
-resource "aws_subnet" "public" {
-  count = length(var.subnet_cidr_blocks)
-
-  vpc_id                  = data.aws_vpc.default.id
-  cidr_block              = var.subnet_cidr_blocks[count.index]
-  availability_zone       = var.availability_zones[count.index]
-  map_public_ip_on_launch = true
-  tags = {
-    Name = "public-${count.index + 1}"
+data "aws_subnets" "public" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.default.id]
   }
 }
 
-variable "availability_zones" {
-  type    = list(string)
-  default = ["us-east-1a", "us-east-1b","us-east-1c","us-east-1d"]
-}
-
-variable "subnet_cidr_blocks" {
-  type    = list(string)
-  default = ["10.0.1.0/24", "10.0.2.0/24","10.0.3.0/24","10.0.4.0/24"]
-}
 
 #cluster provision
 resource "aws_eks_cluster" "example" {
   name     = "EKS_cloud"
   role_arn = aws_iam_role.example.arn
   vpc_config {
-    subnet_ids = aws_subnet.public[count.index]
+    subnet_ids = data.aws_subnets.public.ids
   }
 
 
