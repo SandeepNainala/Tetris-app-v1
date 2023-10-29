@@ -26,6 +26,12 @@ data "aws_vpc" "default" {
   default = true
 }
 
+# Define the list of Availability Zones you want to use
+variable "availability_zones" {
+  type    = list(string)
+  default = ["us-east-1a", "us-east-1b", "us-east-1c","us-east-1d"]
+}
+
 #get public subnets for cluster
 data "aws_subnets" "public" {
   filter {
