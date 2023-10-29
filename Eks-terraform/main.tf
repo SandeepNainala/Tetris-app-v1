@@ -24,6 +24,7 @@ resource "aws_iam_role_policy_attachment" "example-AmazonEKSClusterpolicy" {
 #get vpc data
 data "aws_vpc" "default" {
   default = true
+  availability_zones = ["us-east-1a", "us-east-1b" ]
 }
 
 ##get public subnets for cluster
@@ -41,7 +42,7 @@ resource "aws_eks_cluster" "example" {
   role_arn = aws_iam_role.example.arn
   vpc_config {
     subnet_ids = data.aws_subnets.public.ids
-    availability_zones = ["us-east-1a", "us-east-1b" ]
+
   }
 
 
