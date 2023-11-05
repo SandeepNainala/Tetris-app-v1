@@ -6,7 +6,7 @@ resource "aws_instance" "Jenkins" {
   user_data     = templatefile("./install.sh", {})
 
   tags = {
-    Name = "Jenkins"
+    Name = "Jenkins-Argo"
   }
 
   root_block_device {
