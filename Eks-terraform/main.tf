@@ -34,11 +34,6 @@ data "aws_subnets" "public" {
   }
 }
 
-variable "availability_zones" {
-  type    = list(string)
-  default = ["us-east-1a", "us-east-1b", "us-east-1c", "us-east-1d"]  # Modify to include your desired AZs
-}
-
 
 #cluster provision
 resource "aws_eks_cluster" "example" {
