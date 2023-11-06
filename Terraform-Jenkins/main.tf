@@ -14,6 +14,10 @@ resource "aws_instance" "Jenkins" {
   }
 }
 
+resource "aws_eip" "jenkins" {
+  instance = aws_instance.Jenkins.id
+}
+
 resource "aws_security_group" "Jenkins-sg" {
   name        = "Jenkins-sg"
   description = "Allow TLS inbound traffic"
