@@ -65,3 +65,5 @@ pipeline{
                 sh "trivy image sandeepnainala9/tetrisv1:latest > trivyimage.txt"
             }
         }
+    }
+ }
