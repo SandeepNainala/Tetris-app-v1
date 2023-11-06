@@ -21,12 +21,12 @@ resource "aws_iam_role_policy_attachment" "example-AmazonEKSClusterpolicy" {
   role       = aws_iam_role.example.name
 }
 
-#get vpc data
+##get vpc data
 #data "aws_vpc" "default" {
 #  default = true
 #}
 #
-###get public subnets for cluster
+####get public subnets for cluster
 #data "aws_subnets" "public" {
 #  filter {
 #    name   = "vpc-id"
@@ -38,10 +38,9 @@ resource "aws_iam_role_policy_attachment" "example-AmazonEKSClusterpolicy" {
 #cluster provision
 resource "aws_eks_cluster" "example" {
   name     = "EKS_cloud"
-  vpc_id   = module.vpc.id
   role_arn = aws_iam_role.example.arn
   vpc_config {
-    subnet_ids = module.vpc.public_subnets
+    subnet_ids = [aws_subnet.subnet01.id, aws_subnet.subnet02.id]
   }
 
 
@@ -85,7 +84,7 @@ resource "aws_eks_node_group" "example" {
   cluster_name    = aws_eks_cluster.example.name
   node_group_name = "node-cloud"
   node_role_arn   = aws_iam_role.example1.arn
-  subnet_ids      = module.vpc.public_subnets
+  subnet_ids      = [aws_subnet.subnet01.id, aws_subnet.subnet02.id]
 
   scaling_config {
     desired_size = 1
