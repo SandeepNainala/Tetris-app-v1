@@ -18,13 +18,6 @@ pipeline{
                    }
              }
         }
-        stage('Terraform validate'){
-             steps{
-                 dir('Eks-terraform') {
-                      sh 'terraform validate'
-                   }
-             }
-        }
         stage('Terraform plan'){
              steps{
                  dir('Eks-terraform') {
