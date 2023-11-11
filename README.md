@@ -1,8 +1,6 @@
 # Tetris-app-v1
 
 
-# React Tetris V1
-
 Tetris game built with React
 
 <h1 align="center">
